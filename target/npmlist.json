@@ -1,0 +1,1 @@
+{"version":"1.0.0","name":"mern-crud-login","dependencies":{"bcryptjs":{"version":"2.4.3"},"cookie-parser":{"version":"1.4.6"},"express":{"version":"4.18.2"},"jsonwebtoken":{"version":"9.0.0"},"mongoose":{"version":"7.3.1"},"morgan":{"version":"1.10.0"},"zod":{"version":"3.21.4"}}}
