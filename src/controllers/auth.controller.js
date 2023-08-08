@@ -1,6 +1,8 @@
 import User from '../models/user.model.js';
 import bcrypt from 'bcryptjs';
 import { createAccessToken } from '../libs/jwt.js';
+import jwt from 'jsonwebtoken';
+import { SECRET_TOKEN } from '../config.js';
 
 export const register = async (req, res) => {
 	const { email, password, username } = req.body;
@@ -42,12 +44,12 @@ export const login = async (req, res) => {
 		const userFound = await User.findOne({ email });
 
 		if (!userFound) {
-			return res.status(400).json({ message: 'user not found' });
+			return res.status(400).json(['Email doesnt exist']);
 		}
 
 		const isMatch = await bcrypt.compare(password, userFound.password);
 		if (!isMatch)
-			return res.status(400).json({ message: 'Invalid credentials' });
+			return res.status(400).json(['Invalid credentials']);
 
 		const token = await createAccessToken({
 			id: userFound._id,
@@ -90,3 +92,28 @@ export const profile = async (req, res) => {
 		});
 	}
 };
+
+export const verifyToken = async (req, res) => {
+	const {token} = req.cookies;
+
+	if(!token){
+		return res.send(false);
+	}
+
+	jwt.verify(token, SECRET_TOKEN, async(error, user) => {
+		if (error) {
+			return res.sendStatus(401);
+		}
+
+		const userFound = await User.findById(user.id);
+		if (!userFound) {
+			return res.sendStatus(401);
+		}
+
+		return res.json({
+			id: userFound._id,
+			username: userFound.username,
+			email: userFound.email,
+		})
+	})
+}
