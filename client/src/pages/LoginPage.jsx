@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../context/AuthContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 function LoginPage() {
 	const {
@@ -9,18 +10,28 @@ function LoginPage() {
 		formState: { errors },
 	} = useForm();
 
-	const { signin, errors: signinErrors } = useAuth();
+	const { signin, errors: signinErrors, isAuthenticated } = useAuth();
+	const navigate = useNavigate();
 
 	const onSubmit = handleSubmit((data) => {
 		//console.log(data);
 		signin(data);
 	});
 
+	useEffect(() => {
+		if (isAuthenticated) {
+			navigate('/tasks');
+		}
+	}, [isAuthenticated]);
+
 	return (
 		<div className="flex h-[calc(100vh-100px)] items-center justify-center">
 			<div className="bg-red-600 max-w-md w-full p-10 rounded-md">
 				{signinErrors.map((error, i) => (
-					<div className="bg-red-500 p-2 text-white text-center my-2" key={i}>
+					<div
+						className="bg-red-500 p-2 text-white text-center my-2"
+						key={i}
+					>
 						{error}
 					</div>
 				))}
@@ -48,8 +59,11 @@ function LoginPage() {
 					<button type="submit">Login</button>
 				</form>
 
-				<p className='flex gap-x-2 justify-between'>
-					Don't have an account? <Link to='/register' className='text-gray-100'>Sign up</Link>
+				<p className="flex gap-x-2 justify-between">
+					Don't have an account?{' '}
+					<Link to="/register" className="text-gray-100">
+						Sign up
+					</Link>
 				</p>
 			</div>
 		</div>
