@@ -1,8 +1,9 @@
-import { useTasks } from "../context/TasksContext";
+import { useTasks } from '../context/TasksContext';
+import { Link } from 'react-router-dom';
 
 function TaskCard({ task }) {
 	//console.log(task);
-    const { deleteTask } = useTasks();
+	const { deleteTask } = useTasks();
 
 	return (
 		<div className="bg-green-600 max-w-md w-full p-10 rounded-md">
@@ -12,12 +13,12 @@ function TaskCard({ task }) {
 					<button
 						onClick={() => {
 							//console.log(task._id);
-                            deleteTask(task._id);
+							deleteTask(task._id);
 						}}
 					>
 						delete
 					</button>
-					<button>edit</button>
+					<Link to={`/tasks/${task._id}`}>edit</Link>
 				</div>
 			</header>
 			<p className="text-white">{task.description}</p>
