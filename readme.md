@@ -7,12 +7,12 @@ To deploy and run this project locally, follow these steps:
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/FaztWeb/mern-tasks-auth
+    git clone https://github.com/prisalvarado18/mern-crud-login
     ```
 
 2. Navigate to the project directory:
     ```sh
-    cd mern-tasks-auth
+    cd mern-crud-login
     ```
 
 3. Install the required dependencies:
