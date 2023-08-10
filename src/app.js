@@ -4,11 +4,12 @@ import authRoutes from './routes/auth.routes.js';
 import tasksRoutes from './routes/tasks.routes.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import { FRONT_URL } from './config.js';
 
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: FRONT_URL,
     credentials: true
 }));
 app.use(morgan('dev'));
