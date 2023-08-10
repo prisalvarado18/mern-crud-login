@@ -1,2 +1,2 @@
-src/config.js
-src/database.js
+node_modules
+.env
